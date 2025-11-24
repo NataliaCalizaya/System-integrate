@@ -1,0 +1,67 @@
+header {
+    background-color: var(--color-secondary);
+    color: var(--color-background);
+    box-shadow: var(--shadow);
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+/* Menú principal (modo laptop) */
+.Header-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.Header-link {
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}
+
+.Header-link:hover {
+    background-color: var(--color-hover);
+    color: var(--color-secondary);
+}
+
+/* Botón hamburguesa oculto por defecto */
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 768px) {
+    .Header-nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .Header-nav.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
