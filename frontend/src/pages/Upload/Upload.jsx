@@ -1,6 +1,5 @@
-import "./Upload.css";
-import { NewsForm } from "../../components/Forms";
-
+//import { NewsForm } from "../../components/Forms";
+import { NewsForm } from "../../components/Forms/NewsForm";
 const Upload = () => {
   return (
     <div className="upload-container">

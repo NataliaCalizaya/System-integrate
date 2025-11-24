@@ -1,29 +1,27 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import "./App.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Videos from "./pages/Videos";
-import News from "./pages/News";
-import NewsDetail from "./pages/News/NewsDetail";
-import Login from "./pages/Login";
-import Upload from "./pages/Upload/Upload";
-import Review from "./pages/Review/Review";
-import ReviewDetail from "./pages/Review/ReviewDetail";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header'; // Ajusta la ruta según corresponda
+import Footer from './components/Footer'; // Ajusta la ruta según corresponda
+import Home from './pages/Home';
+import News from './pages/Novedades';
+import Upload from './pages/Upload/Upload';
+import Review from './pages/Review/Review';
+import ReviewDetail from './pages/Review/ReviewDetail';
+import Exportador from './pages/Exportador';
+import Despachante from './pages/Despachante';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     return (
-        <div className="app-container">
+        <div className="flex flex-col min-h-screen">
+            
             <Header />
 
-            <main>
+            <main className="flex-grow bg-gradient-to-br from-cyan-50 to-teal-50 relative">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/news/:id" element={<NewsDetail />} />
                     <Route path="/news" element={<News />} />
-                    <Route path="/videos" element={<Videos />} />
-                    <Route path="/videos/:id" element={<Videos />} />
+                    <Route path="/exportador" element={<Exportador />} />
+                    <Route path="/despachante" element={<Despachante />} />
 
                     {/* Rutas protegidas */}
                     <Route
@@ -51,7 +49,7 @@ function App() {
                         }
                     />
 
-                    <Route path="/login" element={<Login />} />
+                    
                     <Route path="*" element={<Home />} />
                 </Routes>
             </main>

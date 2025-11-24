@@ -2,23 +2,27 @@ import { useState } from "react";
 import { createVideo } from "../../api/videosApi";
 
 export const VideoForm = () => {
+    // Los estados ya no necesitan anotaciones de tipo
     const [name, setName] = useState("");
     const [duration, setDuration] = useState("");
     const [released, setReleased] = useState(""); // dd/mm/aa
-    const [thumbFile, setThumbFile] = useState<File | null>(null);
-    const [videoFile, setVideoFile] = useState<File | null>(null);
+    const [thumbFile, setThumbFile] = useState(null);
+    const [videoFile, setVideoFile] = useState(null);
 
-    const [status, setStatus] = useState<null | string>(null);
+    const [status, setStatus] = useState(null);
 
-    const onThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Se eliminan las anotaciones de tipo del evento (e)
+    const onThumbChange = (e) => {
         setThumbFile(e.target.files?.[0] || null);
     };
 
-    const onVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Se eliminan las anotaciones de tipo del evento (e)
+    const onVideoChange = (e) => {
         setVideoFile(e.target.files?.[0] || null);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    // Se eliminan las anotaciones de tipo del evento (e)
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus(null);
 
@@ -38,8 +42,11 @@ export const VideoForm = () => {
             setStatus("✅ Video cargado con éxito");
             setName(""); setDuration(""); setReleased("");
             setThumbFile(null); setVideoFile(null);
-            (document.getElementById("video-thumb") as HTMLInputElement).value = "";
-            (document.getElementById("video-file") as HTMLInputElement).value = "";
+            
+            // Se elimina la aserción de tipo `as HTMLInputElement`
+            document.getElementById("video-thumb").value = "";
+            document.getElementById("video-file").value = "";
+            
         } catch (err) {
             console.error(err);
             setStatus("❌ Ocurrió un error al cargar el video");

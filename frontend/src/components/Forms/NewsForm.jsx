@@ -1,39 +1,45 @@
 // src/components/Forms/NewsForm.tsx
+// src/components/Forms/NewsForm.jsx
 import { useState } from "react";
 import { createPost } from "../../api/postApi";
 
-const getCookie = (name: string) =>
+const getCookie = (name) =>
     document.cookie.split("; ").find(r => r.startsWith(name + "="))?.split("=")[1] || "";
 
 export const NewsForm = () => {
+    // Los estados ya no requieren la anotación de tipo
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [description, setDescription] = useState("");
     const [caption, setCaption] = useState("");
     const [body, setBody] = useState("");
     const [authorName, setAuthorName] = useState("");
-    const [publishedAt, setPublishedAt] = useState<string>(""); // input datetime-local
+    const [publishedAt, setPublishedAt] = useState(""); // input datetime-local
 
-    const [imageFile, setImageFile] = useState<File | null>(null); // portada (img o video)
-    const [galleryFiles, setGalleryFiles] = useState<File[]>([]);  // galería (imgs/videos)
+    const [imageFile, setImageFile] = useState(null); // portada (img o video)
+    const [galleryFiles, setGalleryFiles] = useState([]);  // galería (imgs/videos)
 
-    const [status, setStatus] = useState<null | string>(null);
+    const [status, setStatus] = useState(null);
     const [submitting, setSubmitting] = useState(false);
 
-    const onMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Se elimina la anotación de tipo del evento (e)
+    const onMainImageChange = (e) => {
         const f = e.target.files?.[0] || null;
         setImageFile(f);
     };
 
-    const onGalleryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Se elimina la anotación de tipo del evento (e)
+    const onGalleryChange = (e) => {
         const files = Array.from(e.target.files ?? []);
         setGalleryFiles(files);
     };
 
-    const isImage = (f: File) => f.type.startsWith("image/");
-    const isVideo = (f: File) => f.type.startsWith("video/");
+    // Funciones de utilidad se mantienen (ya son JS válido)
+    const isImage = (f) => f.type.startsWith("image/");
+    const isVideo = (f) => f.type.startsWith("video/");
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    // Se elimina la anotación de tipo del evento (e)
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setStatus(null);
         setSubmitting(true);
@@ -58,10 +64,10 @@ export const NewsForm = () => {
                     published_at: published_iso,
                 },
                 {
-                    cover: imageFile ?? null,       // portada (puede ser imagen o video)
-                    gallery: galleryFiles ?? [],    // galería
+                    cover: imageFile ?? null,       // portada (puede ser imagen o video)
+                    gallery: galleryFiles ?? [],    // galería
                 },
-                { withCredentials: true }         // si el backend usa cookies de sesión
+                { withCredentials: true }         // si el backend usa cookies de sesión
             );
             console.log(created)
             setStatus("✅ Noticia creada con éxito");
@@ -70,13 +76,13 @@ export const NewsForm = () => {
             setCaption(""); setBody(""); setAuthorName(""); setPublishedAt("");
             setImageFile(null); setGalleryFiles([]);
 
-            // limpiar inputs file
-            (document.getElementById("news-image") as HTMLInputElement).value = "";
-            (document.getElementById("news-gallery") as HTMLInputElement).value = "";
+            // limpiar inputs file. Se elimina la aserción de tipo `as HTMLInputElement`
+            document.getElementById("news-image").value = "";
+            document.getElementById("news-gallery").value = "";
 
             // si querés redirigir al detalle:
             // navigate(`/news/${created.id}`);
-        } catch (err: any) {
+        } catch (err) { // Se elimina la anotación `: any`
             console.error(err);
             setStatus(err.message ?? "❌ Ocurrió un error al cargar la noticia");
         } finally {
@@ -143,14 +149,16 @@ export const NewsForm = () => {
                                     src={URL.createObjectURL(f)}
                                     alt={f.name}
                                     style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", borderRadius: 8 }}
-                                    onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
+                                    // Se elimina la aserción de tipo `as HTMLImageElement`
+                                    onLoad={(e) => URL.revokeObjectURL(e.target.src)}
                                 />
                             ) : isVideo(f) ? (
                                 <video
                                     src={URL.createObjectURL(f)}
                                     muted
                                     style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", borderRadius: 8 }}
-                                    onLoadedData={(e) => URL.revokeObjectURL((e.target as HTMLVideoElement).src)}
+                                    // Se elimina la aserción de tipo `as HTMLVideoElement`
+                                    onLoadedData={(e) => URL.revokeObjectURL(e.target.src)}
                                 />
                             ) : (
                                 <div style={{ padding: "1rem", background: "#f5f5f5", borderRadius: 8 }}>
