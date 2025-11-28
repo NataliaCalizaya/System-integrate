@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi"; 
-import Login from './Login';
+import Login from '../components/Login';
 
 const setCookie = (name, value, days = 7) => {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
